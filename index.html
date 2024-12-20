@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuvem de Palavras</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .word-cloud span {
+      display: inline-block;
+      margin: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center">Gerador de Nuvem de Palavras</h1>
+    <form id="wordForm" class="mt-4">
+      <div class="mb-3">
+        <label for="wordInput" class="form-label">Palavra:</label>
+        <input type="text" id="wordInput" class="form-control" placeholder="Digite uma palavra" required>
+      </div>
+      <div class="mb-3">
+        <label for="frequencyInput" class="form-label">Frequência:</label>
+        <input type="number" id="frequencyInput" class="form-control" placeholder="Digite a frequência" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Adicionar Palavra</button>
+    </form>
+    <div class="mt-4">
+      <h2 class="text-center">Nuvem de Palavras</h2>
+      <div id="wordCloud" class="word-cloud d-flex flex-wrap justify-content-center mt-3"></div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('wordForm');
+    const wordCloud = document.getElementById('wordCloud');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Captura os valores dos campos
+      const word = document.getElementById('wordInput').value.trim();
+      const frequency = parseInt(document.getElementById('frequencyInput').value);
+
+      // Cria o elemento da palavra
+      const wordElement = document.createElement('span');
+      wordElement.textContent = word;
+      wordElement.style.fontSize = `${frequency * 10}px`;
+      wordElement.style.color = randomColor();
+
+      // Adiciona a palavra à nuvem
+      wordCloud.appendChild(wordElement);
+
+      // Limpa os campos
+      form.reset();
+    });
+
+    // Função para gerar uma cor aleatória
+    function randomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+  </script>
+</body>
+</html>
